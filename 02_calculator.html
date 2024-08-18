@@ -1,0 +1,91 @@
+<!DOCenter html>
+<html>
+    <head>
+        <title>Calculator</title>
+        <style>
+            .calculator {
+                max-width: 12cm;
+                margin: 0 auto;
+            }
+
+            #display {
+                width: 100%;
+                height: 50px;
+                background-color: #f0f0f0;
+                text-align: right;
+                padding: 10px;
+                font-size: 24px;
+            }
+
+            .button_container {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                grid-gap: 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Calculator</h1>
+        <div class="calculator">
+            <div id="display">0</div>
+            <div class="button_container">
+                <button onclick="clearAll()">AC</button>
+                <button onclick="clearDisplay()">C</button>
+                <button onclick="percent()">%</button>
+                <button onclick="divide()">/</button>
+                <button onclick="enter(7)">7</button>
+                <button onclick="enter(8)">8</button>
+                <button onclick="enter(9)">9</button>
+                <button onclick="multiply()">x</button>
+                <button onclick="enter(4)">4</button>
+                <button onclick="enter(5)">5</button>
+                <button onclick="enter(6)">6</button>
+                <button onclick="subtract()">-</button>
+                <button onclick="enter(1)">1</button>
+                <button onclick="enter(2)">2</button>
+                <button onclick="enter(3)">3</button>
+                <button onclick="add()">+</button>
+                <button onclick="enter(0)">0</button>
+                <button onclick="enter('.')">.</button>
+                <button onclick="evaluate()">=</button>
+            </div>
+        </div>
+
+        <script>
+            let result = 0;
+            let operator = null;
+            const display = document.getElementById("display")
+
+            function clearDisplay() {
+                display.innerHTML = "0";
+            }
+
+            function clearAll() {
+                clearDisplay();
+                result = 0;
+                operator = null;
+            }
+
+            function getOperand() {
+                return parseFloat(display.innerHTML);
+            }
+
+            function add() {
+                result = result + getOperand();
+                clearDisplay();
+            };
+
+
+
+            function enter(value) {
+                value = value.toString();
+
+                if (display.innerHTML === "0") {
+                    display.innerHTML = value;
+                } else {
+                    display.innerHTML += value;
+                }
+            }
+        </script>
+    </body>
+</html>

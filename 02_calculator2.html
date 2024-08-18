@@ -1,0 +1,85 @@
+<!DOCenter html>
+<html>
+    <head>
+        <title>Calculator</title>
+        <style>
+            .calculator {
+                max-width: 12cm;
+                margin: 0 auto;
+            }
+
+            #display {
+                width: 100%;
+                height: 50px;
+                background-color: #f0f0f0;
+                text-align: right;
+                padding: 10px;
+                font-size: 24px;
+            }
+
+            .button_container {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                grid-gap: 10px;
+            }
+        </style>
+    </head>
+    <script>
+        // let result = '13 + 14 / 7 * 4';
+
+        /** Function buttons to the display*/
+        function pressKey(button) {
+            let display = document.getElementById("display");
+            if (display.innerHTML === "0") {
+                display.innerHTML = button;
+            } else {
+                display.innerHTML += button;
+            }
+        };
+        /** Function Clear to the display*/
+        function pressC(button) {
+            let display = document.getElementById("display");
+            if (display.innerHTML === "0") {
+                
+            } else {
+                display.innerHTML = button;
+            }
+        };
+        /** Percent Button to Display*/
+        function percentButton() {
+            display.innerHTML = (eval(display.innerHTML)) / 100
+        }
+        /** Pressing Equal Function*/
+        function pressEqual() {
+            display.innerHTML = eval(display.innerHTML);
+        };
+    </script>
+    <body>
+        <h1>Calculator</h1>
+        <div class="calculator">
+            <div id="display">0</div>
+            <div class="button_container">
+                <button onclick="pressC(0)">C</button>
+                <button onclick="pressKey('(')">(</button>
+                <button onclick="pressKey(')')">)</button>
+                <button onclick="pressKey(`/`)">/</button>
+                <button onclick="pressKey(7)">7</button>
+                <button onclick="pressKey(8)">8</button>
+                <button onclick="pressKey(9)">9</button>
+                <button onclick="pressOperator(`*`)">X</button>
+                <button onclick="pressKey(4)">4</button>
+                <button onclick="pressKey(5)">5</button>
+                <button onclick="pressKey(6)">6</button>
+                <button onclick="pressKey(`-`)">-</button>
+                <button onclick="pressKey(1)">1</button>
+                <button onclick="pressKey(2)">2</button>
+                <button onclick="pressKey(3)">3</button>
+                <button onclick="pressKey(`+`)">+</button>
+                <button onclick="pressKey(0)">0</button>
+                <button onclick="pressKey(`.`)">.</button>
+                <button onclick="percentButton()">%</button>
+                <button onclick="pressEqual()">=</button>
+            </div>
+        </div>
+    </body>
+</html>
