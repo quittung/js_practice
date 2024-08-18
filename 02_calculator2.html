@@ -48,12 +48,26 @@
             }
         };
         function convertAndEval(displayString) {
-            displayConverted = displayString.replace('x', '*')
-            return eval(displayConverted)
+            let displayConverted = displayString.replace('x', '*');
+
+            let completeEval = ""
+            try {
+                completeEval = eval(displayConverted);
+            } catch (error) {
+                completeEval = 'SyntaxError'
+            }
+            
+            if (completeEval === Infinity) {
+                return display.innerHTML = 'MathError'
+            } else if (completeEval === undefined || completeEval === NaN) {
+                return display.innerHTML = 'SyntaxError'
+            }
+            return completeEval;
         }
         /** Percent Button to Display*/
         function percentButton() {
             display.innerHTML = (convertAndEval(display.innerHTML)) / 100
+            calledEqual = true
         }
         /** Pressing Equal Function*/
         function pressEqual() {
