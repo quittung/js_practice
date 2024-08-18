@@ -57,10 +57,15 @@
                 completeEval = 'SyntaxError'
             }
             
-            if (completeEval === Infinity) {
-                return display.innerHTML = 'MathError'
-            } else if (completeEval === undefined || completeEval === NaN) {
-                return display.innerHTML = 'SyntaxError'
+            // if (completeEval === Infinity) {
+            //     return display.innerHTML = 'MathError'
+            // } else if (completeEval === undefined || completeEval === NaN) {
+            //     return display.innerHTML = 'SyntaxError'
+            // }
+
+            if (typeof completeEval === !Number || 
+                    isNaN(completeEval) || completeEval === Infinity) {
+                completeEval = 'Error'
             }
             return completeEval;
         }
