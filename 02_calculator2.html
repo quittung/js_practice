@@ -31,7 +31,7 @@
         let calledEqual = true
         function pressKey(button) {
             let display = document.getElementById("display");
-            if (calledEqual && !"/*+-".includes(button)) {
+            if (calledEqual && !"/x+-".includes(button)) {
                 display.innerHTML = button;
             } else {
                 display.innerHTML += button;
@@ -47,13 +47,17 @@
                 display.innerHTML = button;
             }
         };
+        function convertAndEval(displayString) {
+            displayConverted = displayString.replace('x', '*')
+            return eval(displayConverted)
+        }
         /** Percent Button to Display*/
         function percentButton() {
-            display.innerHTML = (eval(display.innerHTML)) / 100
+            display.innerHTML = (convertAndEval(display.innerHTML)) / 100
         }
         /** Pressing Equal Function*/
         function pressEqual() {
-            display.innerHTML = eval(display.innerHTML);
+            display.innerHTML = convertAndEval(display.innerHTML);
             calledEqual = true;
         };
     </script>
@@ -69,7 +73,7 @@
                 <button onclick="pressKey(7)">7</button>
                 <button onclick="pressKey(8)">8</button>
                 <button onclick="pressKey(9)">9</button>
-                <button onclick="pressKey(`*`)">X</button>
+                <button onclick="pressKey(`x`)">x</button>
                 <button onclick="pressKey(4)">4</button>
                 <button onclick="pressKey(5)">5</button>
                 <button onclick="pressKey(6)">6</button>
