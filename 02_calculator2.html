@@ -28,13 +28,15 @@
         // let result = '13 + 14 / 7 * 4';
 
         /** Function buttons to the display*/
+        let calledEqual = true
         function pressKey(button) {
             let display = document.getElementById("display");
-            if (display.innerHTML === "0") {
+            if (calledEqual && !"/*+-".includes(button)) {
                 display.innerHTML = button;
             } else {
                 display.innerHTML += button;
             }
+            calledEqual = false
         };
         /** Function Clear to the display*/
         function pressC(button) {
@@ -52,6 +54,7 @@
         /** Pressing Equal Function*/
         function pressEqual() {
             display.innerHTML = eval(display.innerHTML);
+            calledEqual = true;
         };
     </script>
     <body>
@@ -66,7 +69,7 @@
                 <button onclick="pressKey(7)">7</button>
                 <button onclick="pressKey(8)">8</button>
                 <button onclick="pressKey(9)">9</button>
-                <button onclick="pressOperator(`*`)">X</button>
+                <button onclick="pressKey(`*`)">X</button>
                 <button onclick="pressKey(4)">4</button>
                 <button onclick="pressKey(5)">5</button>
                 <button onclick="pressKey(6)">6</button>
