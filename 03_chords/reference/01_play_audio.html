@@ -1,30 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Audio Player</title>
-</head>
-<body>
+  </head>
+  <body>
+    <h1>Audio Player</h1>
+    <button id="startButtonSimple">Start Simple Audio</button>
+    <button id="startButtonCustomizable">Start Customizable Audio</button>
 
-<h1>Audio Player</h1>
-<button id="startButtonSimple">Start Simple Audio</button>
-<button id="startButtonCustomizable">Start Customizable Audio</button>
-
-<script>
-    function playAudioSimple(url) {
+    <script>
+      function playAudioSimple(url) {
         let audioObject = new Audio(url);
         audioObject.play();
-    }
+      }
 
-    async function playAudioCustomizable(url) {
+      async function playAudioCustomizable(url) {
         // Get audio data
         const response = await fetch(url);
-        const arrayBuffer = await response.arrayBuffer();
+        const fileBuffer = await response.arrayBuffer();
 
         // Decode audio
         let audioContext = new window.AudioContext();
-        const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+        const audioBuffer = await audioContext.decodeAudioData(fileBuffer);
 
         // Pipe audio to output
         const source = audioContext.createBufferSource();
@@ -32,16 +31,19 @@
         source.connect(audioContext.destination);
 
         source.start();
-    }
+      }
 
-    // Attach the play function to a button click
-    document.getElementById('startButtonSimple').addEventListener('click', () => {
-        playAudioSimple('../audio/yougotmail.mp3');
-    });
-    document.getElementById('startButtonCustomizable').addEventListener('click', () => {
-        playAudioCustomizable('../audio/yougotmail.mp3');
-    });
-</script>
-
-</body>
+      // Attach the play function to a button click
+      document
+        .getElementById("startButtonSimple")
+        .addEventListener("click", () => {
+          playAudioSimple("../audio/yougotmail.mp3");
+        });
+      document
+        .getElementById("startButtonCustomizable")
+        .addEventListener("click", () => {
+          playAudioCustomizable("../audio/yougotmail.mp3");
+        });
+    </script>
+  </body>
 </html>

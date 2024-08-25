@@ -1,44 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Spectrum Analyser</title>
     <style>
-        canvas {
-            border: 1px solid black;
-        }
+      canvas {
+        border: 1px solid black;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
+    <h1>Spectrum Analyzer</h1>
+    <button id="startButton">Start Audio Processing</button>
+    <canvas id="fftCanvas" width="600" height="300"></canvas>
 
-<h1>Spectrum Analyzer</h1>
-<button id="startButton">Start Audio Processing</button>
-<canvas id="fftCanvas" width="600" height="300"></canvas>
+    <script>
+      let audioContext;
+      let analyser;
+      let frequencyData;
+      let source;
 
-<script>
-    let audioContext;
-    let analyser;
-    let frequencyData;
-    let source;
-
-    async function initializeAudio() {
+      async function handleButtonClick() {
         // Setup audio
-        await initAudio('../audio/yougotmail.mp3');
-        // await initAudio('../audio/sin_4.wav');
+        // await initAudio("../audio/yougotmail.mp3");
+        await initAudio("../audio/sin_4.wav");
 
         // Print some audio information to console
         const sampleRate = audioContext.sampleRate;
         const binSize = sampleRate / analyser.fftSize;
-        console.log('Sample rate: ' + sampleRate);
-        console.log('Bin size: ' + binSize);
-        
+        console.log("Sample rate: " + sampleRate);
+        console.log("Bin size: " + binSize);
+
         // Start audio and draw the spectrum
         playAudio();
         drawSpectrum();
-    }
+      }
 
-    async function initAudio(url) {
+      async function initAudio(url) {
         // Get audio data
         const response = await fetch(url);
         const arrayBuffer = await response.arrayBuffer();
@@ -60,29 +59,29 @@
         source.buffer = audioBuffer;
         source.connect(analyser);
         analyser.connect(audioContext.destination);
-    }
+      }
 
-    function playAudio() {
-        source.start()
-    }
+      function playAudio() {
+        source.start();
+      }
 
-    function drawSpectrum() {
+      function drawSpectrum() {
         // Request that the browser calls the drawSpectrum function again when it redraws the screen
         requestAnimationFrame(drawSpectrum);
 
         // Make sure the analyser and frequency data are initialized
         if (!analyser || !frequencyData) {
-            console.log('Analyser and frequency data are not initialized');
+          console.log("Analyser and frequency data are not initialized");
 
-            return;
+          return;
         }
 
         // Get the frequency data from the analyser
         analyser.getByteFrequencyData(frequencyData);
 
         // Prepare the canvas for drawing
-        const canvas = document.getElementById('fftCanvas');
-        const canvasContext = canvas.getContext('2d');
+        const canvas = document.getElementById("fftCanvas");
+        const canvasContext = canvas.getContext("2d");
         canvasContext.clearRect(0, 0, canvas.width, canvas.height);
 
         // Calculate the width of each bar
@@ -93,22 +92,26 @@
         let x = 0;
         // Go through each frequency bin
         for (let i = 0; i < analyser.frequencyBinCount; i++) {
-            barHeight = frequencyData[i];
+          barHeight = frequencyData[i];
 
-            // Draw a bar with a height corresponding to 'loudness' of the frequency
-            canvasContext.fillStyle = 'rgb(255,50,50)';
-            canvasContext.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
+          // Draw a bar with a height corresponding to 'loudness' of the frequency
+          canvasContext.fillStyle = "rgb(255,50,50)";
+          canvasContext.fillRect(
+            x, // start x
+            canvas.height - barHeight, // start y
+            barWidth, // move x
+            barHeight // move y
+          );
 
-            // Move the drawing position to the right
+          // Move the drawing position to the right
           x += barWidth;
         }
-    }
+      }
 
-    // Attach the initialization function to a button click
-    document.getElementById('startButton').addEventListener('click', () => {
-        initializeAudio();  // Start audio processing when the button is clicked
-    });
-</script>
-
-</body>
+      // Attach the initialization function to a button click
+      document.getElementById("startButton").addEventListener("click", () => {
+        handleButtonClick(); // Start audio processing when the button is clicked
+      });
+    </script>
+  </body>
 </html>
