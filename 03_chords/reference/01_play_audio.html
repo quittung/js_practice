@@ -12,11 +12,8 @@
 <button id="startButtonCustomizable">Start Customizable Audio</button>
 
 <script>
-    let audioObject;
-    let audioContext;
-
     function playAudioSimple(url) {
-        audioObject = new Audio(url);
+        let audioObject = new Audio(url);
         audioObject.play();
     }
 
@@ -26,7 +23,7 @@
         const arrayBuffer = await response.arrayBuffer();
 
         // Decode audio
-        audioContext = new window.AudioContext();
+        let audioContext = new window.AudioContext();
         const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
 
         // Pipe audio to output
