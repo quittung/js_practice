@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Player</title>
+</head>
+<body>
+
+<h1>Audio Player</h1>
+<button id="startButtonSimple">Start Simple Audio</button>
+<button id="startButtonCustomizable">Start Customizable Audio</button>
+
+<script>
+    let audioObject;
+    let audioContext;
+
+    function playAudioSimple(url) {
+        audioObject = new Audio(url);
+        audioObject.play();
+    }
+
+    async function playAudioCustomizable(url) {
+        // Get audio data
+        const response = await fetch(url);
+        const arrayBuffer = await response.arrayBuffer();
+
+        // Decode audio
+        audioContext = new window.AudioContext();
+        const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+
+        // Pipe audio to output
+        const source = audioContext.createBufferSource();
+        source.buffer = audioBuffer;
+        source.connect(audioContext.destination);
+
+        source.start();
+    }
+
+    // Attach the play function to a button click
+    document.getElementById('startButtonSimple').addEventListener('click', () => {
+        playAudioSimple('../audio/yougotmail.mp3');
+    });
+    document.getElementById('startButtonCustomizable').addEventListener('click', () => {
+        playAudioCustomizable('../audio/yougotmail.mp3');
+    });
+</script>
+
+</body>
+</html>
