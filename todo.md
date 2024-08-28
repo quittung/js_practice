@@ -1,7 +1,8 @@
 Plan:
 
-- find the frequency of the strongest signal
-- try to find the corresponding musical pitch
+- find the frequency bin with the strongest signal
+- find the corresponding frequency range 
+- find the corresponding musical pitch
 - if we do chords:
   - detect multiple pitches
   - translate all of those
