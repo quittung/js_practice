@@ -12,8 +12,9 @@
   </head>
   <body>
     <h1>Spectrum Analyzer</h1>
-    <button id="startButton">Start Audio Processing</button>
-    <canvas id="fftCanvas" width="600" height="300"></canvas>
+    <button id="startButton">Start Audio Processing</button><br/>
+    <canvas id="fftCanvas" width="600" height="300"></canvas><br/>
+    <div id="audioInfo"></div>
 
     <script>
       let audioContext;
@@ -26,15 +27,27 @@
         // await initAudio("audio/yougotmail.mp3");
         await initAudio("audio/sin_4.wav");
 
-        // Print some audio information to console
-        const sampleRate = audioContext.sampleRate;
-        const binSize = sampleRate / analyser.fftSize;
-        console.log("Sample rate: " + sampleRate);
-        console.log("Bin size: " + binSize);
+        // Print some audio info to the bottom of the page
+        printInfo();
 
         // Start audio and draw the spectrum
         playAudio();
         drawSpectrum();
+      }
+
+      function printInfo() {
+        const infoDiv = document.getElementById("audioInfo");
+        
+        const sampleRate = audioContext.sampleRate;
+        const fftSize = analyser.fftSize;
+        const binSize = sampleRate / analyser.fftSize;
+        
+        infoDiv.innerHTML = "";
+        infoDiv.innerHTML += "Audio sample rate: " + sampleRate + " Hz <br/>";
+        infoDiv.innerHTML += "FFT samples: " + fftSize + "<br/>";
+        infoDiv.innerHTML += "Max FFT frequency: " + sampleRate / 2 + " Hz <br/>";
+        infoDiv.innerHTML += "Number of frequency bins: " + analyser.frequencyBinCount + "<br/>";
+        infoDiv.innerHTML += "Frequency bin width: " + sampleRate / fftSize + " Hz <br/>";
       }
 
       async function initAudio(url) {
